@@ -17,7 +17,6 @@ namespace EFCoreCourseDemo
             //Console.WriteLine("**********初始化数据完成**********");
             #endregion
 
-
             #region 控制台程序迁移的方式  添加，修改使用的方式
             //var context = new EFCoreDbContext();
             //Console.WriteLine("**********开始初始化数据**********");
@@ -36,6 +35,21 @@ namespace EFCoreCourseDemo
                 }
                 ctx.SaveChanges();
             }
+            #endregion
+
+            #region 使用命令提示框进行数据迁移
+            /*使用命令PowerShell 命令行进行数据迁移
+               1，dotnet tool install--global dotnet-ef  先安装
+
+                  dotnet ef migrations add initial(迁移类的名称)  初始化
+                  dotnet ef database update 更新数据库
+
+                  dotnet ef migrations add update 更新迁移操作
+                  dotnet ef  database update  更新数据库
+
+                  dotnet ef migrations add delete   删除迁移操作
+                  dotnet ef database update 更新数据库
+                  */
             #endregion
 
             Console.ReadKey();
