@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFCoreCourseDemo.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,6 +40,21 @@ namespace EFCoreCourseDemo.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Blogs",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "DDD领域驱动模型" });
+
+            migrationBuilder.InsertData(
+                table: "Blogs",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "EntityFramework Core" });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "Id", "BlogId", "Content", "Title" },
+                values: new object[] { 1, 1, "第一次写博客，先随便写一下", "技术交流" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_BlogId",

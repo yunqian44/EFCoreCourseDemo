@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreCourseDemo.Migrations
 {
     [DbContext(typeof(EFCoreDbContext))]
-    [Migration("20200321113639_Initial")]
-    partial class Initial
+    [Migration("20200321134337_delete")]
+    partial class delete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,13 @@ namespace EFCoreCourseDemo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Blogs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Name = "EntityFramework Core 3.1.1"
+                        });
                 });
 
             modelBuilder.Entity("Model.Post", b =>
@@ -52,6 +59,15 @@ namespace EFCoreCourseDemo.Migrations
                     b.HasIndex("BlogId");
 
                     b.ToTable("Posts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BlogId = 1,
+                            Content = "第一次写博客，先随便写一下",
+                            Title = "技术交流"
+                        });
                 });
 
             modelBuilder.Entity("Model.Post", b =>

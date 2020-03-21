@@ -2,14 +2,16 @@
 using EFCoreCourseDemo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFCoreCourseDemo.Migrations
 {
     [DbContext(typeof(EFCoreDbContext))]
-    partial class EFCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200321134053_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +32,11 @@ namespace EFCoreCourseDemo.Migrations
                     b.ToTable("Blogs");
 
                     b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "DDD领域驱动模型"
+                        },
                         new
                         {
                             Id = 2,

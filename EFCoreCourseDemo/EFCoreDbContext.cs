@@ -29,15 +29,9 @@ namespace EFCoreCourseDemo
             //调用EnsureCreated方法只针对与添加数据有效，但是数据库如果有数据的话，
             //也就是对数据更改将无效
             Console.WriteLine("**********Blog表开始初始化数据**********");
-            modelBuilder.Entity<Blog>().HasData(new Blog
-            {
-                Id=1,
-                Name="DDD领域驱动模型",
-            },new Blog
-            {
-                Id = 2,
-                Name = "EntityFramework Core",
-            });
+            modelBuilder.Entity<Blog>().HasData(
+                //new Blog{Id=1,Name="DDD领域驱动模型"},
+                new Blog{Id = 2,Name = "EntityFramework Core 3.1.1"});
             modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 1,
