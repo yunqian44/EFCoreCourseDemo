@@ -15,7 +15,8 @@ namespace EFCoreCourseDemo
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseLoggerFactory(loggerFactory)
-            .UseSqlServer(@"Server=.;Database=EFCore;Trusted_Connection=True;");
+            .UseMySql(@"server=127.0.0.1;uid=root;pwd=qwer1234!;database=EFCore;Character Set = utf8;");
+        
 
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
