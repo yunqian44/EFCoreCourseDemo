@@ -70,18 +70,29 @@ namespace EFCoreCourseDemo
 
 
             #region 更新时间方式二(重写SaveChanges()方法) MySql 可用
-            modelBuilder.Entity<Blog>(b =>
-                {
-                    b.Property(p => p.CreatedTime)
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("now()");
+            //modelBuilder.Entity<Blog>(b =>
+            //    {
+            //        b.Property(p => p.CreatedTime)
+            //            .HasColumnType("datetime")
+            //            .HasDefaultValueSql("now()");
 
-                    b.Property(p => p.UpdatedTime)
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("now()");
-                });
+            //        b.Property(p => p.UpdatedTime)
+            //            .HasColumnType("datetime")
+            //            .HasDefaultValueSql("now()");
+            //    });
             #endregion
+
+
+            #region 枚举映射
+            modelBuilder.Entity<Blog>(b =>
+            {
+                b.Property(p => p.Categorys).HasColumnType("TINYINT");
+            });
             #endregion
+
+            #endregion
+
+
 
             Console.WriteLine("**********Blog表开始初始化数据**********");
         }

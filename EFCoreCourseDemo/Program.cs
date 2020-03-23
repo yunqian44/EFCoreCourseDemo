@@ -11,15 +11,22 @@ namespace EFCoreCourseDemo
         {
             #region 控制台程序迁移的方式  初始化使用的方式
             var context = new EFCoreDbContext();
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             Console.WriteLine("**********开始初始化数据**********");
             context.Database.EnsureCreated();
 
             //context.Add<Blog>(new Blog { Name = "ef core" });
 
-            var blog = context.Blogs.Find(1);//查询主键为1
-            blog.Name = "EntityFramework Core 5";
+            //var blog = context.Blogs.Find(1);//查询主键为1
+            //blog.Name = "EntityFramework Core 5";
+            //context.SaveChanges();
+
+
+            #region TyinInt类型在EF映射 在查询的时候会报错
+            context.Add<Blog>(new Blog { Name = "ef core",Categorys= Category.Technology });
             context.SaveChanges();
+            var blog = context.Blogs.FirstOrDefault(d=>d.Categorys== Category.Technology);//查询主键为1
+            #endregion
             Console.WriteLine("**********初始化数据完成**********");
             #endregion
 

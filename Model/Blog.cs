@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Model
 {
@@ -25,6 +26,30 @@ namespace Model
         /// </summary>
         public DateTime UpdatedTime { get; set; }
 
+        /// <summary>
+        /// 分类
+        /// </summary>
+        public Category Categorys { get; set; }
+
         public List<Post> Posts { get; set; }
+    }
+
+    /// <summary>
+    /// 分类
+    /// </summary>
+    public enum Category
+    {
+        /// <summary>
+        /// 技术
+        /// </summary>
+        [Description("技术")]
+        Technology=1,
+
+        /// <summary>
+        /// 杂谈
+        /// </summary>
+        [Description("杂谈")]
+        Gossip=2
+
     }
 }
