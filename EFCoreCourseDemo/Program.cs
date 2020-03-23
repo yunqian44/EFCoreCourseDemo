@@ -10,11 +10,17 @@ namespace EFCoreCourseDemo
         static void Main(string[] args)
         {
             #region 控制台程序迁移的方式  初始化使用的方式
-            //var context = new EFCoreDbContext();
+            var context = new EFCoreDbContext();
             //context.Database.EnsureDeleted();
-            //Console.WriteLine("**********开始初始化数据**********");
-            //context.Database.EnsureCreated();
-            //Console.WriteLine("**********初始化数据完成**********");
+            Console.WriteLine("**********开始初始化数据**********");
+            context.Database.EnsureCreated();
+
+            //context.Add<Blog>(new Blog { Name = "ef core" });
+
+            var blog = context.Blogs.Find(1);//查询主键为1
+            blog.Name = "EntityFramework Core 5";
+            context.SaveChanges();
+            Console.WriteLine("**********初始化数据完成**********");
             #endregion
 
             #region 控制台程序迁移的方式  添加，修改使用的方式
@@ -25,16 +31,16 @@ namespace EFCoreCourseDemo
             #endregion
 
             #region HasData() 自定义初始化逻辑
-            using (var ctx=new EFCoreDbContext())
-            {
-                ctx.Database.EnsureCreated();
-                var testBlog = ctx.Blogs.FirstOrDefault(d => d.Name.Equals("微服务设计理念"));
-                if (testBlog==null)
-                {
-                    ctx.Blogs.Add(new Blog { Name = "微服务设计理念" });
-                }
-                ctx.SaveChanges();
-            }
+            //using (var ctx=new EFCoreDbContext())
+            //{
+            //    ctx.Database.EnsureCreated();
+            //    var testBlog = ctx.Blogs.FirstOrDefault(d => d.Name.Equals("微服务设计理念"));
+            //    if (testBlog==null)
+            //    {
+            //        ctx.Blogs.Add(new Blog { Name = "微服务设计理念" });
+            //    }
+            //    ctx.SaveChanges();
+            //}
             #endregion
 
             #region 使用命令提示框进行数据迁移
