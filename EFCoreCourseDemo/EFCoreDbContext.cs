@@ -83,10 +83,25 @@ namespace EFCoreCourseDemo
             #endregion
 
 
-            #region 枚举映射
+            #region 枚举映射 (TinyInt)
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    b.Property(p => p.Categorys).HasColumnType("TINYINT");
+            //});
+            #endregion
+
+            #region 枚举映射（String）方式一  有中文的情况
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    //HasConversion 字符串 值转化器
+            //    b.Property(p => p.Categorys).HasConversion(typeof(string)).HasMaxLength(20);//typeof(string)内置了将枚举转化成字符串的转化器
+            //});
+            #endregion
+
+            #region 枚举映射（string）方式二  没有中文的情况（SqlServer中有 VARCHAR NVARCHAR的区分）
             modelBuilder.Entity<Blog>(b =>
             {
-                b.Property(p => p.Categorys).HasColumnType("TINYINT");
+                b.Property(p => p.Categorys).HasColumnType("VARCHAR(20)");
             });
             #endregion
 

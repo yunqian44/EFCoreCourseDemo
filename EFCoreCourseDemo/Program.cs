@@ -22,7 +22,8 @@ namespace EFCoreCourseDemo
             //context.SaveChanges();
 
 
-            #region TyinInt类型在EF映射 在查询的时候会报错
+            #region 枚举类型在EF映射 在Net Core 2.0查询的时候会报错现在ok
+            //如果枚举没有给定值 默认给定的是0 也就是字符串0 这个时候得处理了  可以在属性上默认
             context.Add<Blog>(new Blog { Name = "ef core",Categorys= Category.Technology });
             context.SaveChanges();
             var blog = context.Blogs.FirstOrDefault(d=>d.Categorys== Category.Technology);//查询主键为1
