@@ -23,6 +23,8 @@ namespace EFCoreCourseDemo
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //针对于HasData限制（即使主键是由数据库生成的自动增长），也需要指定主键 
@@ -99,9 +101,16 @@ namespace EFCoreCourseDemo
             #endregion
 
             #region 枚举映射（string）方式二  没有中文的情况（SqlServer中有 VARCHAR NVARCHAR的区分）
-            modelBuilder.Entity<Blog>(b =>
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    b.Property(p => p.Categorys).HasColumnType("VARCHAR(20)");
+            //});
+            #endregion
+
+            #region 值转化器(密码加密)
+            modelBuilder.Entity<User>(b =>
             {
-                b.Property(p => p.Categorys).HasColumnType("VARCHAR(20)");
+                b.Property(p => p.Password).HasConversion(v=> Encrypt(v),v=>Decrypt(v));
             });
             #endregion
 
@@ -111,6 +120,30 @@ namespace EFCoreCourseDemo
 
             Console.WriteLine("**********Blog表开始初始化数据**********");
         }
+
+        #region 加密算法+static string Encrypt(string password)
+        /// <summary>
+        /// 加密算法
+        /// </summary>
+        /// <param name="password">原始密码</param>
+        /// <returns></returns>
+        public static string Encrypt(string password)
+        {
+            return password + "qwer";
+        }
+        #endregion
+
+        #region 解密算法+static string Decrypt(string password)
+        /// <summary>
+        /// 加密算法
+        /// </summary>
+        /// <param name="password">加密后的密码</param>
+        /// <returns></returns>
+        public static string Decrypt(string password)
+        {
+            return password.Remove(0,password.Length-4);
+        }
+        #endregion
 
         public override int SaveChanges()
         {

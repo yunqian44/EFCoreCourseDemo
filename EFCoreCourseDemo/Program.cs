@@ -24,11 +24,20 @@ namespace EFCoreCourseDemo
 
             #region 枚举类型在EF映射 在Net Core 2.0查询的时候会报错现在ok
             //如果枚举没有给定值 默认给定的是0 也就是字符串0 这个时候得处理了  可以在属性上默认
-            context.Add<Blog>(new Blog { Name = "ef core",Categorys= Category.Technology });
-            context.SaveChanges();
-            var blog = context.Blogs.FirstOrDefault(d=>d.Categorys== Category.Technology);//查询主键为1
+            //context.Add<Blog>(new Blog { Name = "ef core",Categorys= Category.Technology });
+            //context.SaveChanges();
+            //var blog = context.Blogs.FirstOrDefault(d=>d.Categorys== Category.Technology);//查询主键为1
             #endregion
+
+            #region 值转化器
+
+            //假设密码是明文的，暂时不要去纠结
+            context.Users.Add(new User {Name="张三",Password="123" });
+            context.SaveChanges();
+            #endregion
+
             Console.WriteLine("**********初始化数据完成**********");
+
             #endregion
 
             #region 控制台程序迁移的方式  添加，修改使用的方式
