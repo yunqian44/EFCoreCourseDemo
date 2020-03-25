@@ -15,11 +15,13 @@ namespace EFCoreCourseDemo
             Console.WriteLine("**********开始初始化数据**********");
             context.Database.EnsureCreated();
 
+            #region Data Seeding 插入操作 更新操作
             //context.Add<Blog>(new Blog { Name = "ef core" });
 
             //var blog = context.Blogs.Find(1);//查询主键为1
             //blog.Name = "EntityFramework Core 5";
-            //context.SaveChanges();
+            //context.SaveChanges(); 
+            #endregion
 
 
             #region 枚举类型在EF映射 在Net Core 2.0查询的时候会报错现在ok
@@ -29,10 +31,17 @@ namespace EFCoreCourseDemo
             //var blog = context.Blogs.FirstOrDefault(d=>d.Categorys== Category.Technology);//查询主键为1
             #endregion
 
-            #region 值转化器
+            #region 值转化器 (转化方法)
 
             //假设密码是明文的，暂时不要去纠结
-            context.Users.Add(new User {Name="张三",Password="123" });
+            //context.Users.Add(new User {Name="张三",Password="123" });
+            //context.SaveChanges();
+            #endregion
+
+            #region 值转化器 (bool转String)
+
+            //true 映射到数据库的话是一个为1的字符串
+            context.Blogs.Add(new Blog { Name = "张三", boolConvertChar=true });
             context.SaveChanges();
             #endregion
 

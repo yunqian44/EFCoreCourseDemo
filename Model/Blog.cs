@@ -32,6 +32,8 @@ namespace Model
         public Category Categorys { get; set; }
 
         public List<Post> Posts { get; set; }
+
+        public bool boolConvertChar { get; set; }
     }
 
     /// <summary>

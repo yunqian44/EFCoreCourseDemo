@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Model;
 using System;
@@ -108,9 +109,27 @@ namespace EFCoreCourseDemo
             #endregion
 
             #region 值转化器(密码加密)
-            modelBuilder.Entity<User>(b =>
+            //modelBuilder.Entity<User>(b =>
+            //{
+            //    b.Property(p => p.Password).HasConversion(v=> Encrypt(v),v=>Decrypt(v));
+            //});
+            #endregion
+
+            #region 值转化器（转化String）
+            modelBuilder.Entity<Blog>(b =>
             {
-                b.Property(p => p.Password).HasConversion(v=> Encrypt(v),v=>Decrypt(v));
+                //IsUnicode(false) 表示的是vchar 而不是nvarchar  (具体可以在Sql Server中体现)
+                //b.Property(p => p.boolConvertChar).HasMaxLength(1).IsUnicode(false)
+                //.HasConversion(typeof(string));
+
+                //方法一
+                //var boolCharConverter = new ValueConverter<bool, string>(x => x ? "X" : "Y", y => y.Equals("X"));
+                //b.Property(p => p.boolConvertChar).HasMaxLength(1).IsUnicode(false)
+                //.HasConversion(boolCharConverter);
+
+                //方法二  通过委托来实现的
+                b.Property(p => p.boolConvertChar).HasMaxLength(1).IsUnicode(false)
+                .HasConversion(x => x ? "X" : "Y", y => y.Equals("X"));
             });
             #endregion
 
