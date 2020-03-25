@@ -136,9 +136,36 @@ namespace EFCoreCourseDemo
             #region MyRegion
             //不能转化成null,也就是当配置映射字段是不为null的时候,我们在添加数据的时候不去
             //添加Name的时候 ToString() 会变成null,会报错
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    b.Property(p => p.Name).IsRequired().HasConversion(v=>v.ToString(),v=>v);
+            //});
+            #endregion
+
+            #region MyRegion  方法一
+            //存储的时候还是DateTime,但是从数据库中查出来时 需要转化成UTC格式（世界时间）
             modelBuilder.Entity<Blog>(b =>
             {
-                b.Property(p => p.Name).IsRequired().HasConversion(v=>v.ToString(),v=>v);
+                b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
+                .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            });
+            #endregion
+
+            #region MyRegion  方法二 （值转化器全局配置）
+            //存储的时候还是DateTime,但是从数据库中查出来时 需要转化成UTC格式（世界时间）
+            var dateTimeConvert = new ValueConverter<DateTime,DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                        property.SetValueConverter(dateTimeConvert);
+                }
+            }
+            modelBuilder.Entity<Blog>(b =>
+            {
+                b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
+                .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
             });
             #endregion
 
