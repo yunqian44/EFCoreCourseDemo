@@ -41,8 +41,22 @@ namespace EFCoreCourseDemo
             #region 值转化器 (bool转String)
 
             //true 映射到数据库的话是一个为1的字符串
-            context.Blogs.Add(new Blog { Name = "张三", boolConvertChar=true });
+            //context.Blogs.Add(new Blog { Name = "张三", boolConvertChar=true });
+            //context.SaveChanges();
+            #endregion
+
+            #region 值转化器（实现扩展属性）
+            context.Users.Add(new User
+            {
+                Name = "张三",
+                BirthDate = new BirthDate(1993, 03, 07)
+            });
             context.SaveChanges();
+
+            foreach (var user in context.Users.ToList())
+            {
+                Console.WriteLine($"距离我下一次生日还有[{user.BirthDate.DaysOfNextBirthday()}]天");
+            }
             #endregion
 
             Console.WriteLine("**********初始化数据完成**********");

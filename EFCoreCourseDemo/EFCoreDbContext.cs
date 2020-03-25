@@ -144,30 +144,38 @@ namespace EFCoreCourseDemo
 
             #region MyRegion  方法一
             //存储的时候还是DateTime,但是从数据库中查出来时 需要转化成UTC格式（世界时间）
-            modelBuilder.Entity<Blog>(b =>
-            {
-                b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
-                .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-            });
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
+            //    .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            //});
             #endregion
 
             #region MyRegion  方法二 （值转化器全局配置）
             //存储的时候还是DateTime,但是从数据库中查出来时 需要转化成UTC格式（世界时间）
-            var dateTimeConvert = new ValueConverter<DateTime,DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                foreach (var property in entityType.GetProperties())
-                {
-                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
-                        property.SetValueConverter(dateTimeConvert);
-                }
-            }
-            modelBuilder.Entity<Blog>(b =>
-            {
-                b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
-                .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
-            });
+            //var dateTimeConvert = new ValueConverter<DateTime,DateTime>(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            //foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            //{
+            //    foreach (var property in entityType.GetProperties())
+            //    {
+            //        if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+            //            property.SetValueConverter(dateTimeConvert);
+            //    }
+            //}
+            //modelBuilder.Entity<Blog>(b =>
+            //{
+            //    b.Property(p => p.CreatedTime).HasColumnType("DATETIME")
+            //    .HasConversion(v => v, v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
+            //});
             #endregion
+
+
+            modelBuilder.Entity<User>(b =>
+            {
+                b.Property(p => p.BirthDate).HasColumnType("DATETIME")
+                .HasConversion(v => new DateTime(v.Year,v.Month,v.Day),
+                v => new BirthDate(v.Year,v.Month,v.Day));
+            });
 
             #endregion
 
