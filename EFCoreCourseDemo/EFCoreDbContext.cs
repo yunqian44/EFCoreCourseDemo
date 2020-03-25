@@ -133,6 +133,15 @@ namespace EFCoreCourseDemo
             });
             #endregion
 
+            #region MyRegion
+            //不能转化成null,也就是当配置映射字段是不为null的时候,我们在添加数据的时候不去
+            //添加Name的时候 ToString() 会变成null,会报错
+            modelBuilder.Entity<Blog>(b =>
+            {
+                b.Property(p => p.Name).IsRequired().HasConversion(v=>v.ToString(),v=>v);
+            });
+            #endregion
+
             #endregion
 
 
